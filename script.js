@@ -42,8 +42,15 @@ async function fetchNews() {
 
         // Sort by date - most recent first
         allItems.sort((a, b) => {
-            const dateA = new Date(a.pubDate || 0);
-            const dateB = new Date(b.pubDate || 0);
+            // Try different date field names that RSS feeds might use
+            const getDate = (item) => {
+                const dateStr = item.pubDate || item.isoDate || item.date || '';
+                const date = new Date(dateStr);
+                return isNaN(date.getTime()) ? new Date(0) : date;
+            };
+            
+            const dateA = getDate(a);
+            const dateB = getDate(b);
             return dateB - dateA;
         });
 
@@ -102,8 +109,20 @@ function formatTime(dateString) {
     if (!dateString) return 'Unknown time';
     
     const date = new Date(dateString);
+    
+    // If date is invalid, return unknown time
+    if (isNaN(date.getTime())) {
+        return 'Unknown time';
+    }
+    
     const now = new Date();
     const diffMs = now - date;
+    
+    // Handle negative dates (future dates)
+    if (diffMs < 0) {
+        return 'Just now';
+    }
+    
     const diffMins = Math.floor(diffMs / 60000);
     const diffHours = Math.floor(diffMins / 60);
     const diffDays = Math.floor(diffHours / 24);
