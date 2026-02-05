@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock News</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/rss-parser@3/dist/rss-parser.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📈 Stock News</h1>
+            <p class="subtitle">Real-time market news & discussions</p>
+            <div class="status">
+                <span id="last-update">Last updated: --:--</span>
+                <span id="refresh-indicator" class="loading"></span>
+            </div>
+        </header>
+
+        <main>
+            <div id="feed" class="news-feed">
+                <div class="loading-message">Loading news...</div>
+            </div>
+        </main>
+
+        <footer>
+            <p>News from r/stocks · Updates every 60 seconds</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
