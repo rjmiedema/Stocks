@@ -1,5 +1,9 @@
-const CORS_PROXY = "https://corsproxy.io/?url=";
-const RSS_FEED_URL = "https://www.reddit.com/r/stocks.rss";
+const RSS_FEED_URLs = [
+    "https://feeds.bloomberg.com/markets/news/stocks.rss",
+    "https://feeds.finance.yahoo.com/rss/2.0/headline",
+    "https://www.cnbc.com/id/100003114/device/rss/rss.html"
+];
+
 const REFRESH_INTERVAL = 60000; // 60 seconds
 
 const parser = new RSSParser();
@@ -12,31 +16,44 @@ async function fetchNews() {
         const refreshIndicator = document.getElementById('refresh-indicator');
         refreshIndicator.style.opacity = '1';
 
-        const fullUrl = CORS_PROXY + encodeURIComponent(RSS_FEED_URL);
-        const feed = await parser.parseURL(fullUrl);
+        let feed = null;
+        let lastError = null;
+
+        // Try each feed source
+        for (const feedUrl of RSS_FEED_URLs) {
+            try {
+                feed = await parser.parseURL(feedUrl);
+                if (feed && feed.items && feed.items.length > 0) {
+                    break; // Success, use this feed
+                }
+            } catch (e) {
+                lastError = e;
+                continue; // Try next source
+            }
+        }
+
+        if (!feed || !feed.items || feed.items.length === 0) {
+            throw new Error('Could not fetch from any news source');
+        }
 
         // Clear previous content
         feedDiv.innerHTML = '';
 
         // Add articles
-        if (feed.items && feed.items.length > 0) {
-            feed.items.slice(0, 30).forEach((item, index) => {
-                const articleHTML = `
-                    <div class="news-item">
-                        <a href="${item.link}" target="_blank" rel="noopener noreferrer">
-                            <h3>${sanitizeHTML(item.title)}</h3>
-                        </a>
-                        <div class="meta">
-                            <span class="time">${formatTime(item.pubDate)}</span>
-                            <span class="source">r/stocks</span>
-                        </div>
+        feed.items.slice(0, 30).forEach((item, index) => {
+            const articleHTML = `
+                <div class="news-item">
+                    <a href="${item.link}" target="_blank" rel="noopener noreferrer">
+                        <h3>${sanitizeHTML(item.title)}</h3>
+                    </a>
+                    <div class="meta">
+                        <span class="time">${formatTime(item.pubDate)}</span>
+                        <span class="source">Stock News</span>
                     </div>
-                `;
-                feedDiv.innerHTML += articleHTML;
-            });
-        } else {
-            feedDiv.innerHTML = '<div class="loading-message">No articles found</div>';
-        }
+                </div>
+            `;
+            feedDiv.innerHTML += articleHTML;
+        });
 
         // Update timestamp
         updateTimestamp();
