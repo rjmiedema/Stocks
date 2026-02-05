@@ -1,7 +1,12 @@
 const RSS_FEED_URLs = [
     "https://feeds.bloomberg.com/markets/news/stocks.rss",
     "https://feeds.finance.yahoo.com/rss/2.0/headline",
-    "https://www.cnbc.com/id/100003114/device/rss/rss.html"
+    "https://www.cnbc.com/id/100003114/device/rss/rss.html",
+    "https://feeds.reuters.com/finance/markets",
+    "https://www.cnbc.com/id/100001266/device/rss/rss.html",
+    "https://feeds.finance.yahoo.com/rss/2.0/headline?s=SPY",
+    "https://feeds.reuters.com/reuters/businessNews",
+    "https://feeds.bloomberg.com/companies/equity.rss"
 ];
 
 const REFRESH_INTERVAL = 60000; // 60 seconds
