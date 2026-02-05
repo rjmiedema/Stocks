@@ -21,31 +21,47 @@ async function fetchNews() {
         const refreshIndicator = document.getElementById('refresh-indicator');
         refreshIndicator.style.opacity = '1';
 
-        let feed = null;
-        let lastError = null;
+        let allItems = [];
 
-        // Try each feed source
+        // Try to fetch from all feed sources
         for (const feedUrl of RSS_FEED_URLs) {
             try {
-                feed = await parser.parseURL(feedUrl);
+                const feed = await parser.parseURL(feedUrl);
                 if (feed && feed.items && feed.items.length > 0) {
-                    break; // Success, use this feed
+                    allItems = allItems.concat(feed.items);
                 }
             } catch (e) {
-                lastError = e;
+                console.warn(`Failed to fetch from ${feedUrl}:`, e);
                 continue; // Try next source
             }
         }
 
-        if (!feed || !feed.items || feed.items.length === 0) {
+        if (allItems.length === 0) {
             throw new Error('Could not fetch from any news source');
+        }
+
+        // Sort by date - most recent first
+        allItems.sort((a, b) => {
+            const dateA = new Date(a.pubDate || 0);
+            const dateB = new Date(b.pubDate || 0);
+            return dateB - dateA;
+        });
+
+        // Remove duplicates by title
+        const seen = new Set();
+        const uniqueItems = [];
+        for (const item of allItems) {
+            if (!seen.has(item.title)) {
+                seen.add(item.title);
+                uniqueItems.push(item);
+            }
         }
 
         // Clear previous content
         feedDiv.innerHTML = '';
 
         // Add articles
-        feed.items.slice(0, 30).forEach((item, index) => {
+        uniqueItems.slice(0, 30).forEach((item, index) => {
             const articleHTML = `
                 <div class="news-item">
                     <a href="${item.link}" target="_blank" rel="noopener noreferrer">
