@@ -1,4 +1,4 @@
-const ALPHA_VANTAGE_API_KEY = "YOUR_API_KEY_HERE";
+const ALPHA_VANTAGE_API_KEY = "ZATJXMHZDJTBT8B4";
 const BASE_URL = "https://www.alphavantage.co/query";
 
 const symbolInput = document.getElementById("symbol-input");
