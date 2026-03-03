@@ -3,15 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stocks</title>
+  <title>Insider Transactions</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app">
-    <h1>Stocks</h1>
-    <p>Starter project is ready.</p>
-    <button id="ping-btn" type="button">Test JS</button>
-    <p id="output" aria-live="polite"></p>
+    <h1>Insider Transactions</h1>
+    <p class="intro">Track recent insider buys and sells using Alpha Vantage.</p>
+
+    <section class="controls" aria-label="Search controls">
+      <label for="symbol-input">Ticker</label>
+      <input id="symbol-input" type="text" value="AAPL" maxlength="10" autocomplete="off">
+      <button id="load-btn" type="button">Load Transactions</button>
+    </section>
+
+    <p class="hint">Set your key in <code>script.js</code>: <code>ALPHA_VANTAGE_API_KEY</code>.</p>
+    <p id="status" class="status" aria-live="polite"></p>
+
+    <section id="results" class="results" aria-label="Insider transaction results"></section>
   </main>
 
   <script src="script.js"></script>
