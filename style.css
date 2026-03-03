@@ -37,6 +37,7 @@ h1 {
   flex-wrap: wrap;
   align-items: end;
   gap: 12px;
+  margin-bottom: 10px;
 }
 
 .controls label {
@@ -51,6 +52,23 @@ h1 {
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   font-size: 1rem;
+}
+
+.alert-controls {
+  margin-top: 8px;
+}
+
+.checkbox-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.checkbox-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
 }
 
 button {
@@ -85,6 +103,56 @@ button:hover {
 
 .results {
   overflow-x: auto;
+}
+
+.alerts {
+  margin: 8px 0 12px;
+}
+
+.summary {
+  margin: 8px 0 16px;
+}
+
+.summary h2 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  color: #1e3a8a;
+}
+
+.top50 {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #dbe2ee;
+}
+
+.top50 h2 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  color: #0f172a;
+}
+
+.top50-intro {
+  margin: 0 0 10px;
+  color: #475569;
+  font-size: 0.92rem;
+}
+
+.alerts-empty {
+  margin: 0;
+  color: #475569;
+}
+
+.alert-card {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #9a3412;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.alert-card strong {
+  color: #7c2d12;
 }
 
 table {

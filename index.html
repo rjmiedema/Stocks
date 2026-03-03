@@ -16,11 +16,37 @@
       <input id="symbol-input" type="text" value="AAPL" maxlength="10" autocomplete="off">
       <button id="load-btn" type="button">Load Transactions</button>
     </section>
+    <section class="controls alert-controls" aria-label="Alert controls">
+      <label for="min-shares-input">Min shares</label>
+      <input id="min-shares-input" type="number" min="0" step="1000" value="100000">
+
+      <label for="min-value-input">Min trade value ($)</label>
+      <input id="min-value-input" type="number" min="0" step="100000" value="1000000">
+
+      <label class="checkbox-row" for="popup-alerts">
+        <input id="popup-alerts" type="checkbox">
+        Popup alert
+      </label>
+    </section>
 
     <p class="hint">Set your key in <code>script.js</code>: <code>ALPHA_VANTAGE_API_KEY</code>.</p>
     <p id="status" class="status" aria-live="polite"></p>
 
+    <section id="alerts" class="alerts" aria-label="High volume alerts"></section>
+    <section id="daily-summary" class="summary" aria-label="Daily transaction summary"></section>
     <section id="results" class="results" aria-label="Insider transaction results"></section>
+
+    <section class="top50" aria-label="Top 50 Nasdaq daily summary">
+      <h2>Top 50 Daily Insider Summary</h2>
+      <p class="top50-intro">One line per stock: qty buy, qty sell, value buy, value sell.</p>
+      <div class="controls">
+        <label for="top50-date-input">Date</label>
+        <input id="top50-date-input" type="date">
+        <button id="load-top50-btn" type="button">Load Top 50 Summary</button>
+      </div>
+      <p id="top50-status" class="status" aria-live="polite"></p>
+      <section id="top50-results" class="results" aria-label="Top 50 summary table"></section>
+    </section>
   </main>
 
   <script src="script.js"></script>
